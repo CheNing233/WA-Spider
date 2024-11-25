@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from src.tusi_art_model import TusiArtModel
+from src.models.tusi_art import TusiArtModel
 
 
 class TestTusiArtModel(TestCase):
