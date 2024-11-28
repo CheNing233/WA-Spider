@@ -5,7 +5,9 @@ from config import GlobalConfig
 from share import wa_spider_share
 
 
-class TusiArtModel:
+
+
+class TusiArt:
 
     @staticmethod
     def get_model_detail(model_id: str):
