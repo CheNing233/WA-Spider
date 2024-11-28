@@ -38,8 +38,8 @@ class ScrollableFrame(ttk.Frame):
         # 绑定鼠标滚轮事件
         self.canvas.bind_all("<MouseWheel>", self._on_mouse_wheel)
 
-        self.after(100, self._update_scroll_region)
-        self.after(100, self._update_frame_width)
+        self.after(250, self._update_scroll_region)
+        self.after(250, self._update_frame_width)
 
     def _update_scroll_region(self, event=None):
         """

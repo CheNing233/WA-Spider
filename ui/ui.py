@@ -13,9 +13,10 @@ class WaSpiderUI:
         return cls._instance
 
     def __init__(self, root):
+        self.civitai_frame = None
+        self.civitai_scroll = None
+        self.tusi_art_frame = None
         self.tusi_art_scroll = None
-        self.civitai_tab = None
-        self.tusi_art_tab = None
         self.tusi_art_component = None
 
         # 确保 __init__ 只在实例化时执行一次
@@ -33,19 +34,20 @@ class WaSpiderUI:
         notebook = ttk.Notebook(self.root)
 
         # 创建 TusiArt 页面
-        self.tusi_art_tab = ttk.Frame(notebook)
-        notebook.add(self.tusi_art_tab, text="TusiArt")
-
-        self.tusi_art_scroll = ScrollableFrame(self.tusi_art_tab)
-
-
+        # 创建 TusiArt 页面容器
+        self.tusi_art_frame = ttk.Frame(notebook)
+        # 添加 TusiArt 页面容器到 tab
+        notebook.add(self.tusi_art_frame, text="TusiArt")
+        # 创建滚动容器
+        self.tusi_art_scroll = ScrollableFrame(self.tusi_art_frame)
+        # 将组件挂载到滚动容器
         self.tusi_art_component \
             = TusiArtComponent(self.tusi_art_scroll.get_frame())
 
-
         # 创建 Civitai 页面
-        self.civitai_tab = ttk.Frame(notebook)
-        notebook.add(self.civitai_tab, text="Civitai")
+        self.civitai_frame = ttk.Frame(notebook)
+        notebook.add(self.civitai_frame, text="Civitai")
+        self.civitai_scroll = ScrollableFrame(self.civitai_frame)
 
         # 将 Notebook 放置在窗口中
         notebook.pack(expand=True, fill="both")

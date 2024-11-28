@@ -1,6 +1,8 @@
 from tkinter import ttk
 from tkinter import Tk
 
+from src.controllers.tusi_art_fetcher import TusiArtFetcher
+
 
 class TusiArtComponent:
     def __init__(self, root):
@@ -25,10 +27,33 @@ class TusiArtComponent:
         self.button_frame = ttk.Frame(self.root)
         self.button_frame.pack(fill="x", padx=5, pady=5)
 
-        # 在按钮容器中放置提交按钮
-        self.submit_button = ttk.Button(self.button_frame, text="提交", command=self.on_submit)
-        self.submit_button.pack(side="left", padx=5)  # 按钮放在左侧，带一点内边距
+        # fetch_detail_btn
+        self.fetch_detail_btn = ttk.Button(self.button_frame, text="抓取模型详情", command=self.on_fetch_detail)
+        self.fetch_detail_btn.pack(side="left", padx=5)  # 按钮放在左侧，带一点内边距
 
-    def on_submit(self):
+        # fetch_covers_btn
+        self.fetch_covers_btn = ttk.Button(self.button_frame, text="抓取模型相关图片", command=self.on_fetch_covers)
+        self.fetch_covers_btn.pack(side="left", padx=5)  # 按钮放在左侧，带一点内边距
+
+        # all_fetch_and_save_btn
+        self.all_fetch_and_save_btn = ttk.Button(self.button_frame, text="一键抓取并入库", command=self.on_fetch_detail)
+        self.all_fetch_and_save_btn.pack(side="left", padx=5)
+
+        self.info_frame = ttk.Frame(self.root)
+        self.info_frame.pack(fill="x", padx=5, pady=5)
+
+        self.info_label = ttk.Label(self.info_frame, text="准备完毕", wraplength=200)
+        self.info_label.pack(side="left", fill="x", expand=True, padx=5)
+
+    def on_fetch_detail(self):
+        url = self.entry_input.get()
+        print(f"开始抓取模型详情：{url}")
+        fetcher = TusiArtFetcher(url)
+
+        self.info_label.config(text=fetcher.fetch_model_detail())
+
+        print('抓取完成')
+
+    def on_fetch_covers(self):
         input_text = self.entry_input.get()
         print(f"输入框中的内容：{input_text}")
