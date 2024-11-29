@@ -2,10 +2,12 @@ from tkinter import ttk
 from tkinter import Tk
 
 from src.controllers.tusi_art_fetcher import TusiArtFetcher
+from ui.components.logger import LoggerContainer
 
 
 class TusiArtComponent:
     def __init__(self, root):
+        self.fetcher: TusiArtFetcher | None = None
         self.root = root
 
         # 创建标题标签并使用 pack 布局
@@ -28,15 +30,26 @@ class TusiArtComponent:
         self.button_frame.pack(fill="x", padx=5, pady=5)
 
         # fetch_detail_btn
-        self.fetch_detail_btn = ttk.Button(self.button_frame, text="抓取模型详情", command=self.on_fetch_detail)
+        self.fetch_detail_btn = ttk.Button(
+            self.button_frame, text="抓取模型详情", command=self.on_fetch_detail
+        )
         self.fetch_detail_btn.pack(side="left", padx=5)  # 按钮放在左侧，带一点内边距
 
+        self.save_detail_btn = ttk.Button(
+            self.button_frame, text="保存模型详情（保存到sqlite数据库）",
+            command=self.on_save_detail)
+        self.save_detail_btn.pack(side="left", padx=5)
+
         # fetch_covers_btn
-        self.fetch_covers_btn = ttk.Button(self.button_frame, text="抓取模型相关图片", command=self.on_fetch_covers)
+        self.fetch_covers_btn = ttk.Button(
+            self.button_frame, text="抓取模型相关图片", command=self.on_fetch_covers
+        )
         self.fetch_covers_btn.pack(side="left", padx=5)  # 按钮放在左侧，带一点内边距
 
         # all_fetch_and_save_btn
-        self.all_fetch_and_save_btn = ttk.Button(self.button_frame, text="一键抓取并入库", command=self.on_fetch_detail)
+        self.all_fetch_and_save_btn = ttk.Button(
+            self.button_frame, text="一键抓取并入库",
+            command=self.on_fetch_and_save)
         self.all_fetch_and_save_btn.pack(side="left", padx=5)
 
         self.info_frame = ttk.Frame(self.root)
@@ -45,15 +58,48 @@ class TusiArtComponent:
         self.info_label = ttk.Label(self.info_frame, text="准备完毕", wraplength=200)
         self.info_label.pack(side="left", fill="x", expand=True, padx=5)
 
+        self.logger_frame = ttk.Frame(self.root)
+        self.logger_frame.pack(fill="both", padx=5, pady=5)
+
+        self.logger = LoggerContainer(self.logger_frame)
+        self.logger.pack(fill="both", expand=True, padx=5)
+
     def on_fetch_detail(self):
+        self.fetcher = None
+
         url = self.entry_input.get()
         print(f"开始抓取模型详情：{url}")
-        fetcher = TusiArtFetcher(url)
+        self.fetcher = TusiArtFetcher(url)
 
-        self.info_label.config(text=fetcher.fetch_model_detail())
+        self.info_label.config(
+            text=self.fetcher.fetch_model_detail()
+        )
 
         print('抓取完成')
 
+    def on_save_detail(self):
+        if self.fetcher is None:
+            self.info_label.config(text="请先抓取详情")
+            return
+
+        self.info_label.config(
+            text=self.fetcher.save_model_detail()
+        )
+
+        print('模型详情已入库')
+
     def on_fetch_covers(self):
-        input_text = self.entry_input.get()
-        print(f"输入框中的内容：{input_text}")
+        if self.fetcher is None:
+            self.info_label.config(text="请先抓取详情")
+            return
+
+        self.info_label.config(
+            text=self.fetcher.save_model_covers()
+        )
+
+        print('模型封面图片抓取完成')
+
+    def on_fetch_and_save(self):
+        self.on_fetch_detail()
+        self.on_save_detail()
+        self.on_fetch_covers()
