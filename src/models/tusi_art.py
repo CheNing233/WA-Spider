@@ -72,7 +72,7 @@ class TusiArtModelDetail:
     def save_2_file(self):
         self.project_dir = str(os.path.join(get_root_dir(), "data", self.get_id()))
         cover_dir = os.path.join(self.project_dir, "cover")
-        detail_json_dir = os.path.join(self.project_dir, "detail.json")
+        detail_json_dir = os.path.join(self.project_dir, f'{self.raw_data["model"]["files"][0]["name"]}.json')
 
         if not os.path.exists(self.project_dir):
             os.makedirs(self.project_dir)

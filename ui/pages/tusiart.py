@@ -2,7 +2,7 @@ from tkinter import ttk
 from tkinter import Tk
 
 from src.controllers.tusi_art_fetcher import TusiArtFetcher
-from ui.components.logger import LoggerContainer
+from ui.components.LoggerContainer import LoggerContainer
 
 
 class TusiArtComponent:
@@ -31,24 +31,24 @@ class TusiArtComponent:
 
         # fetch_detail_btn
         self.fetch_detail_btn = ttk.Button(
-            self.button_frame, text="抓取模型详情", command=self.on_fetch_detail
+            self.button_frame, text="【1】抓取模型详情", command=self.on_fetch_detail
         )
         self.fetch_detail_btn.pack(side="left", padx=5)  # 按钮放在左侧，带一点内边距
 
         self.save_detail_btn = ttk.Button(
-            self.button_frame, text="保存模型详情（保存到sqlite数据库）",
+            self.button_frame, text="【2】保存模型详情（保存到sqlite数据库）",
             command=self.on_save_detail)
         self.save_detail_btn.pack(side="left", padx=5)
 
         # fetch_covers_btn
         self.fetch_covers_btn = ttk.Button(
-            self.button_frame, text="抓取模型相关图片", command=self.on_fetch_covers
+            self.button_frame, text="【3】抓取模型相关图片", command=self.on_fetch_covers
         )
         self.fetch_covers_btn.pack(side="left", padx=5)  # 按钮放在左侧，带一点内边距
 
         # all_fetch_and_save_btn
         self.all_fetch_and_save_btn = ttk.Button(
-            self.button_frame, text="一键抓取并入库",
+            self.button_frame, text="【1+2+3】一键抓取并入库",
             command=self.on_fetch_and_save)
         self.all_fetch_and_save_btn.pack(side="left", padx=5)
 

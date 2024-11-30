@@ -1,7 +1,7 @@
 from unittest import TestCase
 import tkinter as tk
 
-from ui.components.logger import LoggerContainer
+from ui.components.LoggerContainer import LoggerContainer
 
 
 class TestScrollableText(TestCase):

@@ -1,4 +1,5 @@
 import json
+import os.path
 from unittest import TestCase
 
 from src.models.tusi_art import TusiArt
@@ -26,5 +27,6 @@ class TestTusiArt(TestCase):
 
     def test_get_cover_image(self):
         TusiArt.get_cover_image(
-            'https://images.tusiassets.com/model_showcase/0/8607847e-a5ca-e286-d414-2e72d410446e.png'
+            'https://images.tusiassets.com/model_showcase/0/8607847e-a5ca-e286-d414-2e72d410446e.png',
+            os.path.dirname(__file__)
         )

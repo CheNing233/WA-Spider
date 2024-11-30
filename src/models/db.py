@@ -1,3 +1,4 @@
+import os
 import sqlite3
 
 from src.utils.helper import format_dict_value_as_string
@@ -5,6 +6,8 @@ from src.utils.helper import format_dict_value_as_string
 
 class DB:
     def __init__(self, db_file_path: str = '../data/database.db'):
+        if os.path.exists(db_file_path) is False:
+            os.makedirs(os.path.dirname(db_file_path), exist_ok=True)
         self.connection = sqlite3.connect(db_file_path)
         self.cursor = self.connection.cursor()
         self.create_model_detail_table()

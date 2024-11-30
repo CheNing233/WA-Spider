@@ -45,9 +45,9 @@ class WaSpiderUI:
             = TusiArtComponent(self.tusi_art_scroll.get_frame())
 
         # 创建 Civitai 页面
-        self.civitai_frame = ttk.Frame(notebook)
-        notebook.add(self.civitai_frame, text="Civitai")
-        self.civitai_scroll = ScrollableFrame(self.civitai_frame)
+        # self.civitai_frame = ttk.Frame(notebook)
+        # notebook.add(self.civitai_frame, text="Civitai")
+        # self.civitai_scroll = ScrollableFrame(self.civitai_frame)
 
         # 将 Notebook 放置在窗口中
         notebook.pack(expand=True, fill="both")
